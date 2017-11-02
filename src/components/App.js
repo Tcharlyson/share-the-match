@@ -4,6 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Home from './Home.js'
 import '../stylesheets/App.css';
@@ -13,19 +14,21 @@ import '../stylesheets/App.css';
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/topics">Topics</Link></li>
-          </ul>
+      <MuiThemeProvider>
+        <Router>
+          <div>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/topics">Topics</Link></li>
+            </ul>
 
-          <hr />
+            <hr />
 
-          <Route exact path="/" component={Home} />
-          <Route path="/topics" component={Topics} />
-        </div>
-      </Router>
+            <Route exact path="/" component={Home} />
+            <Route path="/topics" component={Topics} />
+          </div>
+        </Router>
+      </MuiThemeProvider>
     );
   }
 }
