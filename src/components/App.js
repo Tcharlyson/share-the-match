@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { BrowserRouter, Link, Route } from 'react-router-dom'
+import { Navbar, NavItem, Nav, MenuItem, NavDropdown} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import Home from './Home.js'
+import Profile from './Profile.js'
 import '../stylesheets/App.css';
 
 
@@ -14,57 +12,42 @@ import '../stylesheets/App.css';
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
-        <Router>
-          <div>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/topics">Topics</Link></li>
-            </ul>
-
-            <hr />
-
-            <Route exact path="/" component={Home} />
-            <Route path="/topics" component={Topics} />
-          </div>
-        </Router>
-      </MuiThemeProvider>
+      <BrowserRouter>
+        <div>
+          <Navbar>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/" label="Share the match">Home</Link>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav>
+                <NavItem eventKey={1} href="#">Devenir hote</NavItem>
+                <NavItem eventKey={2} href="#">Link</NavItem>
+                <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+                  <MenuItem eventKey={3.1}>Action</MenuItem>
+                  <MenuItem eventKey={3.2}>Another action</MenuItem>
+                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
+                  <MenuItem divider />
+                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
+                </NavDropdown>
+              </Nav>
+              <Nav pullRight>
+                <NavItem eventKey={1} href="#">Link Right</NavItem>
+                <LinkContainer to="/users/edit">
+                  <NavItem eventKey={2} href="#">Profile</NavItem>
+                </LinkContainer>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+          
+          <Route exact path="/" component={Home} />
+          <Route exact path="/users/edit" component={Profile} />
+        </div>
+        </BrowserRouter>
     );
   }
 }
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )} />
-  </div>
-)
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
 
 export default App;
